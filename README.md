@@ -1,7 +1,7 @@
 # Scripts to make deveoping on WSL(2) easier.
 
 | Script | Description |
-| ====== | =========== |
+| ------ | ----------- |
 |  [gen-resolve-conf.sh](./gen-resolv-conf.sh) | Creates an /etc/resolv.conf that lists IPV4 nameservers from the windows host first  and the wsl gateway (i.e. vEthernet (WSL) on the windows host), last.  This allows for DNS when on VPN connections. |
 
 
