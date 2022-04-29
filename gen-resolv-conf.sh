@@ -9,7 +9,8 @@ COMMAND_FULL_PATH=${COMMAND_DIR}/$(basename ${0})
 POWERSHELL="/mnt/c/Windows/System32/WindowsPowerShell/v1.0/powershell.exe"
 
 . ${SCRIPT_DIR}/common.sh
-verifyExecutablePresent netmask
+verifyExecutablePresent ip
+verifyExecutablePresent ipcalc
 verifyExecutablePresent ${POWERSHELL}
 echo >&5
 
@@ -48,7 +49,9 @@ echo >&5 "--------------------------------"
 
     # always add the WSL virtual adapter gateway
     echo "# WSL vEthernet gateway"
-    wslGateway=$(netmask $(ip addr show dev eth0 | grep "inet "| sed -e 's: *inet ::' | sed -e 's: .*::') | tr -d ' ' | sed -e 's:\.0/.*:.1:')
+    default_if=$(ip route list | awk '/^default/ {print $5}')
+    default_if_cidr_addr=$(ip -o -f inet addr show $default_if | awk '{print $4}')
+    wslGateway=$(ipcalc "$default_if_cidr_addr" | awk '/HostMin/ {print $2}')
     echo nameserver=${wslGateway}
 } | tr -d '\r' | tee $tmp >&5
 echo >&5 "--------------------------------"
