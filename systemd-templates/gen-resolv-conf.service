@@ -1,0 +1,6 @@
+[Unit]
+Description=Regenerate /etc/resolv.conf to work on WSL in VPN
+
+[Service]
+Type=oneshot
+ExecStart=%INSTALLDIR%/gen-resolv-conf.sh

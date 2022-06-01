@@ -1,0 +1,10 @@
+[Unit]
+Description=Regenerate /etc/resolv.conf on a timer.
+Requires=gen-resolv-conf.service
+
+[Timer]
+Unit=gen-resolv-conf.service
+OnCalendar=*-*-* *:*:00
+
+[Install]
+WantedBy=timers.target
