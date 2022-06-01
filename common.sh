@@ -22,6 +22,8 @@ verifyExecutablePresent() {
 
 verifyExecutablePresent diff
 
+# Copy text file $1 to $2 if they differ, automatically sudoing for the cp command.
+# Requires that both $1 and $2 are readable without sudo.
 sudoSyncFile() {
     local fromFile=$1
     local toFile=$2
@@ -37,6 +39,10 @@ sudoSyncFile() {
         echo >&5 Unchanged.
     else
         echo "Updating ${toFile}."
-        (set -x; sudo cp "${fromFile}" "${toFile}")
+        if [ "$EUID" -ne 0 ]; then
+            (set -x; sudo cp "${fromFile}" "${toFile}")
+        else
+            (set -x; cp "${fromFile}" "${toFile}")
+        fi
     fi
 }
