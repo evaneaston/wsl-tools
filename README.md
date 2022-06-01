@@ -17,7 +17,6 @@
 generateResolvConf = false
 ````
 
-
 ## 2. Allow your default linxu distro user to run `cron` and run `gen-resolv-conf.sh` without a password
 
 From within your wsl distro, run `sudo visudo` to edit the `sudoers` and **add** a line (do no tremove the existing lines for your users):
